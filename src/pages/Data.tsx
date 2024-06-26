@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Navbar from "../Navbar"
+import Navbar from "../components/Navbar"
 import { Bar, Doughnut } from "react-chartjs-2";
 import {
     Chart as ChartJS,
