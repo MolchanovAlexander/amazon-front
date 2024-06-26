@@ -43,15 +43,31 @@ export const Data = () => {
         limit: 100
     });
     useEffect(() => {
-
-        dataRepresentation(setData);
-
+        const makeRequest = async () => {
+            try {
+                const res = await fetch(
+                    `http://localhost:8080/api/data`,
+                    {
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+                        },
+                    }
+                );
+                const data = await res.json();
+                setData(data);
+                console.log(data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        makeRequest();
     }, []);
 
     const handleSubmit = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         try {
-            await fetch(
+            const res = await fetch(
                 `http://localhost:8080/api/data`,
                 {
                     method: "POST",
@@ -64,7 +80,9 @@ export const Data = () => {
                     }),
                 }
             );
-            dataRepresentation(setData);
+            const data = await res.json();
+            setData(data);
+
         } catch (error) {
             console.log(error);
         }
@@ -107,24 +125,3 @@ export const Data = () => {
     )
 }
 
-function dataRepresentation(setData: (newPoints: number[]) => void) {
-    const makeRequest = async () => {
-        try {
-            const res = await fetch(
-                `http://localhost:8080/api/data`,
-                {
-                    method: "GET",
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-                    },
-                }
-            );
-            const data = await res.json();
-            setData(data);
-            console.log(data);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-    makeRequest();
-}
