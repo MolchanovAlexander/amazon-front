@@ -29,7 +29,6 @@ export const Login = () => {
         if (res.ok) {
             const data = await res.json();
             const jwtToken = data.token;
-            console.log(data);
             localStorage.setItem('jwtToken', jwtToken);
             navigate("/")
         }
